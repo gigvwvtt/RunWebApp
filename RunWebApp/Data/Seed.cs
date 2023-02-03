@@ -1,5 +1,5 @@
-﻿using RunWebApp.Data.Enum;
-using RunWebApp.Data;
+﻿using RunWebApp.Data;
+using RunWebApp.Data.Enum;
 using RunWebApp.Models;
 
 namespace RunGroopWebApp.Data
