@@ -9,10 +9,12 @@ namespace RunWebApp.Controllers
     {
 		private readonly IClubRepository _clubRepository;
         private readonly IPhotoService _photoService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ClubController(IClubRepository clubRepository, IPhotoService photoService)
+        public ClubController(IClubRepository clubRepository, IPhotoService photoService, IHttpContextAccessor contextAccessor)
         {
 			_clubRepository = clubRepository;
+            _httpContextAccessor = contextAccessor;
             _photoService = photoService;
         }
 
@@ -30,7 +32,9 @@ namespace RunWebApp.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            var currentUserId = _httpContextAccessor.HttpContext?.User.GetUserId();
+            var createClubViewModel = new CreateClubViewModel { AppUserId = currentUserId };
+            return View(createClubViewModel);
         }
 
         [HttpPost]
@@ -45,6 +49,7 @@ namespace RunWebApp.Controllers
                     Title = clubVM.Title,
                     Description = clubVM.Description,
                     Image = result.Url.ToString(),
+                    AppUserId = clubVM.AppUserId,
                     Address = new Address { 
                         Street = clubVM.Address.Street,
                         City= clubVM.Address.City,
