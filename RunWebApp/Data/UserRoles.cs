@@ -1,0 +1,10 @@
+﻿using System.Security.Principal;
+
+namespace RunWebApp.Data
+{
+	public static class UserRoles
+	{
+		public const string Admin = "admin";
+		public const string User = "user";
+	}
+}
