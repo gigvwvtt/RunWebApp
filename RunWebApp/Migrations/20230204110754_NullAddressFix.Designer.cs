@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RunWebApp.Data;
 
@@ -11,9 +12,10 @@ using RunWebApp.Data;
 namespace RunWebApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230204110754_NullAddressFix")]
+    partial class NullAddressFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -189,6 +191,7 @@ namespace RunWebApp.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("AddressId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -383,7 +386,9 @@ namespace RunWebApp.Migrations
                 {
                     b.HasOne("RunWebApp.Models.Address", "Address")
                         .WithMany()
-                        .HasForeignKey("AddressId");
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Address");
                 });

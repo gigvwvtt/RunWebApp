@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using RunGroopWebApp.Data;
 using RunWebApp.Data;
 using RunWebApp.Helpers;
 using RunWebApp.Interfaces;
