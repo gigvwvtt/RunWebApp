@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using RunWebApp.Data;
 using RunWebApp.Helpers;
 using RunWebApp.Interfaces;
-using RunWebApp.Migrations;
 using RunWebApp.Models;
 using RunWebApp.Repository;
 using RunWebApp.Services;
@@ -16,6 +15,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IClubRepository, ClubRepository>();
 builder.Services.AddScoped<IRaceRepository, RaceRepository>();
 builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPhotoService, PhotoService>();
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

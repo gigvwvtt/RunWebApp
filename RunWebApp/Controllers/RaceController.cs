@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RunWebApp.Interfaces;
 using RunWebApp.Models;
-using RunWebApp.Repository;
-using RunWebApp.Services;
 using RunWebApp.ViewModels;
 
 namespace RunWebApp.Controllers
 {
-    public class RaceController : Controller
+	public class RaceController : Controller
     {
 		private readonly IRaceRepository _raceRepository;
         private readonly IPhotoService _photoService;
