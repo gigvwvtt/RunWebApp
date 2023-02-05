@@ -37,7 +37,7 @@ namespace RunWebApp.Repository
 
         public async Task<AppUser> GetByIdNoTracking(string id)
         {
-            return await _context.Users.Where(u => u.Id == id).AsNoTracking().FirstOrDefaultAsync();
+            return await _context.Users.Where(u => u.Id == id).AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public bool Update(AppUser user)
@@ -46,7 +46,7 @@ namespace RunWebApp.Repository
             return Save();
         }
 
-        private bool Save()
+        public bool Save()
         {
             var saved = _context.SaveChanges();
             return saved > 0 ? true : false;
