@@ -14,11 +14,13 @@ namespace RunWebApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IClubRepository _clubRepository;
+        private readonly IConfiguration _config;
 
-        public HomeController(ILogger<HomeController> logger, IClubRepository clubRepository)
+        public HomeController(ILogger<HomeController> logger, IClubRepository clubRepository, IConfiguration config)
         {
             _logger = logger;
             _clubRepository = clubRepository;
+            _config = config;
         }
 
         public async Task<IActionResult> Index()
@@ -27,7 +29,8 @@ namespace RunWebApp.Controllers
             var homeViewModel = new HomeViewModel();
             try
             {
-                var url = "https://ipinfo.io/?token=";
+                var ipInfoToken = _config.GetSection("ipInfoToken");
+                var url = $"https://ipinfo.io/?token={ipInfoToken.Value}";
                 var info = new WebClient().DownloadString(url);
                 ipInfo = JsonConvert.DeserializeObject<IPInfo>(info);
                 var regionInfo = new RegionInfo(ipInfo.Country);
