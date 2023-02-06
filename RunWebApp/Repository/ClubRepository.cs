@@ -31,12 +31,22 @@ namespace RunWebApp.Repository
 			return await _context.Clubs.ToListAsync();
 		}
 
-		public async Task<Club> GetByIdAsync(int id)
+        public async Task<List<City>> GetAllCitiesByState(string state)
+        {
+			return await _context.Cities.Where(c => c.StateCode.Contains(state)).ToListAsync();
+        }
+
+        public async Task<List<State>> GetAllStates()
+        {
+            return await _context.States.ToListAsync();
+        }
+
+        public async Task<Club?> GetByIdAsync(int id)
 		{
 			return await _context.Clubs.Include(i => i.Address).FirstOrDefaultAsync(i => i.Id == id);
 		}
 
-		public async Task<Club> GetByIdAsyncNoTracking(int id)
+		public async Task<Club?> GetByIdAsyncNoTracking(int id)
 		{
 			return await _context.Clubs.Include(i => i.Address).AsNoTracking().FirstOrDefaultAsync(i => i.Id == id);
 		}
@@ -46,7 +56,12 @@ namespace RunWebApp.Repository
 			return await _context.Clubs.Where(c => c.Address.City.Contains(city)).ToListAsync();
 		}
 
-		public bool Save()
+        public async Task<int> GetCountAsync()
+        {
+            return await _context.Clubs.CountAsync();
+        }
+
+        public bool Save()
 		{
 			var saved = _context.SaveChanges();
 			return saved > 0 ? true : false;

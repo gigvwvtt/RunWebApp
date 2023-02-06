@@ -303,9 +303,14 @@
     <!--end of section-->
 </div>
 
-
-<script type="text/javascript">
-    function submitProfileImage() {
-        document.getElementById("submit-image-button").click();
+@section Scripts
+    {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-</script>
+    <script type="text/javascript">
+        function submitProfileImage() {
+            document.getElementById("submit-image-button").click();
+        }
+    </script>
+}

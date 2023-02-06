@@ -13,7 +13,7 @@ namespace RunWebApp.Controllers
 			_userRepository = userRepository;
 		}
 
-		[HttpGet("users")]
+		[HttpGet("Runners")]
         public async Task<IActionResult> Index()
         {
             var users = await _userRepository.GetAllUsers();
