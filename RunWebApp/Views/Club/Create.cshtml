@@ -2,10 +2,6 @@
 @using RunWebApp.ViewModels;
 @model CreateClubViewModel
 
-@{
-
-}
-
 <form method="post" asp-action="Create" enctype="multipart/form-data">
     <input type="hidden" id="AppUserId" name="AppUserId" asp-for="AppUserId" />
     <div class="form-group">
@@ -26,7 +22,7 @@
     <div class="form-group">
         <label asp-for="ClubCategory">Club Category</label>
         <select asp-for="ClubCategory" asp-items="@Html.GetEnumSelectList<ClubCategory>()" class="form-control">
-            <option>--Select--</option>
+            <option selected="selected">--Select--</option>
         </select>
         <span asp-validation-for="ClubCategory" class="text-danger"></span>
     </div>

@@ -19,9 +19,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPhotoService, PhotoService>();
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
+    options.UseSqlite(builder.Configuration.GetConnectionString("Sqlite")));
 builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddMemoryCache();
 builder.Services.AddSession();
@@ -30,11 +28,11 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 var app = builder.Build();
 
-if (args.Length == 1 && args[0].ToLower() == "seeddata")
-{
-    //await Seed.SeedUsersAndRolesAsync(app);
-    //Seed.SeedData(app);
-}
+// if (args.Length == 1 && args[0].ToLower() == "seeddata")
+// {
+//     Seed.SeedData(app);
+//     await Seed.SeedUsersAndRolesAsync(app);
+// }
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

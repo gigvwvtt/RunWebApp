@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUser> SignInManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
@@ -22,7 +25,7 @@
 						<li class="nav-item">
 							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
 						</li>
-						@if (User.Identity.IsAuthenticated)
+						@if (SignInManager.IsSignedIn(User))
 						{
 							<li class="nav-item">
 								<a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Runners</a>
@@ -34,7 +37,7 @@
 						<li class="nav-item">
 							<a class="nav-link text-dark" asp-area="" asp-controller="Race" asp-action="Index">Races</a>
 						</li>
-						@if (User.Identity.IsAuthenticated)
+						@if (SignInManager.IsSignedIn(User))
 						{
 							<li class="nav-item">
 								<a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
@@ -67,7 +70,7 @@
 
 	<footer class="border-top footer text-muted">
 		<div class="container">
-			&copy; 2023 - RunWebApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+			&copy; 2023 - RunWebApp
 		</div>
 	</footer>
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>

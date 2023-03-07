@@ -7,6 +7,8 @@ using RunWebApp.ViewModels;
 using System.Diagnostics;
 using System.Globalization;
 using System.Net;
+using Microsoft.AspNetCore.Identity;
+using RunWebApp.Data;
 
 namespace RunWebApp.Controllers
 {
@@ -15,12 +17,17 @@ namespace RunWebApp.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IClubRepository _clubRepository;
         private readonly IConfiguration _config;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
 
-        public HomeController(ILogger<HomeController> logger, IClubRepository clubRepository, IConfiguration config)
+        public HomeController(ILogger<HomeController> logger, IClubRepository clubRepository, 
+            IConfiguration config, UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
             _logger = logger;
             _clubRepository = clubRepository;
             _config = config;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public async Task<IActionResult> Index()
@@ -41,10 +48,6 @@ namespace RunWebApp.Controllers
                 {
                     homeViewModel.Clubs = await _clubRepository.GetClubByCity(homeViewModel.City);
                 }
-                else
-                {
-                    homeViewModel.Clubs = null;
-                }
                 return View(homeViewModel);
             }
             catch (Exception)
@@ -52,6 +55,40 @@ namespace RunWebApp.Controllers
                 homeViewModel.Clubs = null;
             }
             return View(homeViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Index(HomeViewModel homeViewModel)
+        {
+            var createViewModel = homeViewModel.Register;
+            if (!ModelState.IsValid) return View(homeViewModel);
+
+            var user = await _userManager.FindByEmailAsync(createViewModel.Email);
+            if (user != null)
+            {
+                ModelState.AddModelError("Register.Email", "This email address is already in use");
+                return View(homeViewModel);
+            }
+
+            var newUser = new AppUser
+            {
+                UserName = createViewModel.UserName,
+                Email = createViewModel.Email,
+                Address = new Address()
+                {
+                    ZipCode = createViewModel.ZipCode ?? 0
+                }
+            };
+
+            var newUserResponse = await _userManager.CreateAsync(newUser, createViewModel.Password);
+
+            if (newUserResponse.Succeeded)
+            {
+                await _signInManager.SignInAsync(newUser, false);
+                await _userManager.AddToRoleAsync(newUser, UserRoles.User);
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
