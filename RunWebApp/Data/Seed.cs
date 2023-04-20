@@ -26,9 +26,9 @@ public class Seed
 						ClubCategory = ClubCategory.City,
 						Address = new Address()
 						{
-							Street = "123 Main St",
-							City = "Charlotte",
-							State = "NC"
+							Street = "ulitsa Malysheva",
+							City = "Yekaterinburg",
+							State = "Sverdlovsk Oblast"
 						}
 					 },
 					new Club()
@@ -39,9 +39,9 @@ public class Seed
 						ClubCategory = ClubCategory.Endurance,
 						Address = new Address()
 						{
-							Street = "123 Main St",
-							City = "Charlotte",
-							State = "NC"
+							Street = "prospekt Lenina",
+							City = "Yekaterinburg",
+							State = "Sverdlovsk Oblast"
 						}
 					},
 					new Club()
@@ -52,9 +52,9 @@ public class Seed
 						ClubCategory = ClubCategory.Trail,
 						Address = new Address()
 						{
-							Street = "123 Main St",
-							City = "Charlotte",
-							State = "NC"
+							Street = "prospekt Lenina",
+							City = "Yekaterinburg",
+							State = "Sverdlovsk Oblast"
 						}
 					},
 					new Club()
@@ -65,9 +65,9 @@ public class Seed
 						ClubCategory = ClubCategory.City,
 						Address = new Address()
 						{
-							Street = "123 Main St",
-							City = "Michigan",
-							State = "NC"
+							Street = "prospekt Lenina",
+							City = "Nizhny Tagil",
+							State = "Sverdlovsk Oblast"
 						}
 					}
 				});
@@ -86,9 +86,9 @@ public class Seed
 						RaceCategory = RaceCategory.Marathon,
 						Address = new Address()
 						{
-							Street = "123 Main St",
-							City = "Charlotte",
-							State = "NC"
+							Street = "prospekt Mira",
+							City = "Yekaterinburg",
+							State = "Sverdlovsk Oblast"
 						}
 					},
 					new Race()
@@ -100,9 +100,9 @@ public class Seed
 						AddressId = 5,
 						Address = new Address()
 						{
-							Street = "123 Main St",
-							City = "Charlotte",
-							State = "NC"
+							Street = "prospekt Mira",
+							City = "Nizhny Tagil",
+							State = "Sverdlovsk Oblast"
 						}
 					}
 				});
@@ -125,24 +125,24 @@ public class Seed
 
 			//Users
 			var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
-			string adminUserEmail = "teddysmithdeveloper@gmail.com";
+			string adminUserEmail = "developer@example.com";
 
 			var adminUser = await userManager.FindByEmailAsync(adminUserEmail);
 			if (adminUser == null)
 			{
 				var newAdminUser = new AppUser()
 				{
-					UserName = "teddysmithdev",
+					UserName = "developer",
 					Email = adminUserEmail,
 					EmailConfirmed = true,
 					Address = new Address()
 					{
-						Street = "123 Main St",
-						City = "Charlotte",
-						State = "NC"
+						Street = "Yevropeyskaya ulitsa",
+						City = "Sovkhoznyy",
+						State = "Sverdlovsk Oblast"
 					}
 				};
-				await userManager.CreateAsync(newAdminUser, "Coding@1234?");
+				await userManager.CreateAsync(newAdminUser, "Devpass@1234?");
 				await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin);
 			}
 
@@ -158,12 +158,12 @@ public class Seed
 					EmailConfirmed = true,
 					Address = new Address()
 					{
-						Street = "123 Main St",
-						City = "Charlotte",
-						State = "NC"
+						Street = "Yevropeyskaya ulitsa",
+						City = "Sovkhoznyy",
+						State = "Sverdlovsk Oblast"
 					}
 				};
-				await userManager.CreateAsync(newAppUser, "Coding@1234?");
+				await userManager.CreateAsync(newAppUser, "Devpass@1234?");
 				await userManager.AddToRoleAsync(newAppUser, UserRoles.User);
 			}
 		}
